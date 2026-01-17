@@ -1,3 +1,4 @@
+'''Structured logging'''
 import logging
 
 logging.basicConfig(

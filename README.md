@@ -1,71 +1,90 @@
 # Fraud Detection API
 
-## Tags
+## Overview
 
-`machine-learning` `fraud-detection` `lightgbm` `fastapi` `shap` `docker` `api` `mlops`
+This project is a **production‑ready Fraud Detection REST API** built with **FastAPI** and a **LightGBM binary classifier**, designed to score financial transactions for fraud risk and provide **model explainability using SHAP**. A continuation of my previous project [credit_card_fraud_detection_system_for_credit_card_transactions](https://github.com/SaintJeane/credit_card_fraud_detection_system_for_credit_card_transactions), where the best trained model, and the model's metadata are retrieved from for deployment.
 
----
+The system exposes endpoints for:
 
-## Description
+* Fraud probability prediction
+* Local, per‑transaction explainability (top contributing features)
+* Health and readiness checks
 
-A production-ready **Fraud Detection REST API** built with **FastAPI** and **LightGBM**, supporting real-time predictions and **SHAP-based explainability**. The API is designed for deployment using **Docker**, follows ML serving best practices, and includes automated CI via **GitHub Actions**.
-
-The model was trained on engineered PCA-based transaction features and exposes two main endpoints:
-
-* `/predict` – fraud probability and classification
-* `/explain` – per-feature SHAP explanations
+The application is fully **Dockerized**, uses **strict request/response schemas**, and follows best practices for **ML inference APIs**.
 
 ---
 
-## Tech Stack
+## Key Features
 
-* **Python 3.10**
-* **FastAPI** – API framework
-* **LightGBM** – fraud classification model
-* **SHAP** – model explainability
-* **scikit-learn** – preprocessing
-* **Docker & Docker Compose** – containerization
-* **GitHub Actions** – CI pipeline
+* ⚡ FastAPI for high‑performance inference
+* 🌲 LightGBM binary classification model
+* 🔍 SHAP‑based explainability (TreeExplainer)
+* 📦 Docker & Docker Compose support
+* 🧪 Input validation with Pydantic
+* 🩺 Health and startup checks
+* 🧾 Structured logging
 
 ---
 
 ## Project Structure
 
-```
+```text
 fraud-detection-api/
 ├── app/
-│   ├── main.py
-│   ├── predict.py
-│   ├── explain.py
-│   ├── model_loader.py
-│   └── schemas.py
+│   ├── main.py                 # FastAPI app & routes
+│   ├── predict.py              # Prediction logic
+│   ├── explain.py              # SHAP explainability logic
+│   ├── schemas.py              # Pydantic schemas
+│   ├── model_loader.py         # Model, scaler, metadata loading
+│   ├── feature_descriptions.py # Helper for feature descriptions mapping
+|   ├── logging_config.py 
+│   └── __init__.py
 ├── models/
 │   ├── lgbm_tuned.pkl
 │   ├── scaler.pkl
 │   └── lgbm_metadata.json
-├── docker-compose.yml
 ├── Dockerfile
+├── docker-compose.yml
 ├── requirements.txt
-└── README.md
+├── README.md
+└── .gitignore
 ```
+
+---
+
+## Model Details
+
+* **Algorithm**: LightGBM (binary classifier)
+* **Output**: Fraud probability + threshold‑based prediction
+* **Threshold**: Loaded from model metadata
+* **Features**:
+
+  * PCA components: `V1` … `V28`
+  * Engineered features: `Amount_scaled`, `Time_scaled`
+
+All inference inputs are internally aligned to the exact feature set used during training.
 
 ---
 
 ## API Endpoints
 
-### POST /predict
+### `POST /predict`
 
-Predict whether a transaction is fraudulent.
+Predicts fraud probability for a transaction.
 
-**Request**
+An example of an input data:
+
+**Request Body**
 
 ```json
 {
-  "V1": -1.23,
-  "V2": 0.45,
-  "V3": -0.67,
-  "Amount": 120.5,
-  "Time": 35000
+  "data": {
+    "V1": -1.23,
+    "V2": 0.45,
+    "V3": -0.67,
+    "Amount": 120.5,
+    "Time": 35000
+  }
 }
 ```
 
@@ -73,124 +92,143 @@ Predict whether a transaction is fraudulent.
 
 ```json
 {
-  "fraud_probability": 0.0342,
+  "fraud_probability": 0.0123,
   "prediction": 0
 }
 ```
 
 ---
 
-### POST /explain
+### `POST /explain`
 
-Return SHAP values explaining the fraud prediction.
+Returns SHAP‑based explanations for a transaction.
+
+**Request Body**
+
+```json
+{
+  "data": {
+    "V1": -1.23,
+    "V2": 0.45,
+    "V3": -0.67,
+    "Amount": 120.5,
+    "Time": 35000
+  }
+}
+```
 
 **Response**
 
 ```json
 {
-  "V1": -0.021,
-  "V2": 0.013,
-  "Amount_scaled": 0.004
+  "fraud_probability": 0.0123,
+  "top_features": [
+    {
+      "feature": "V14",
+      "description": "Transaction risk signal",
+      "shap_value": 0.345678,
+      "impact": "increases fraud risk"
+    }
+  ]
 }
 ```
 
 ---
 
-## Running Locally (Without Docker)
+### `GET /health`
+
+Health check endpoint.
+
+**Response**
+
+```json
+{
+  "status": "ok"
+}
+```
+
+---
+
+## Running Locally
+
+### 1. Clone Repository
+
+```bash
+git clone https://github.com/SaintJeane/fraud-detection-api.git
+cd fraud-detection-api
+```
+
+### 2. Create Virtual Environment
 
 ```bash
 python -m venv venv
-source venv/bin/activate  # Windows: venv\\Scripts\\activate
+source venv/bin/activate  # Windows: venv\Scripts\activate
 pip install -r requirements.txt
+```
+
+### 3. Run API
+
+```bash
 uvicorn app.main:app --reload
 ```
 
-Visit: [http://127.0.0.1:8000/docs](http://127.0.0.1:8000/docs)
+Open: [http://127.0.0.1:8000/docs](http://127.0.0.1:8000/docs)
 
 ---
 
-## Docker Setup
+## Running with Docker
 
-### Dockerfile
-
-The API is containerized using Python 3.10 slim and includes system dependencies required by LightGBM.
-
----
-
-### Docker Compose
-
-Create a `docker-compose.yml` file:
-
-```yaml
-version: "3.9"
-
-services:
-  fraud-api:
-    build: .
-    container_name: fraud-detection-api
-    ports:
-      - "8000:8000"
-    restart: unless-stopped
-```
-
-### Run with Docker Compose
+### Build Image
 
 ```bash
-docker-compose up --build
+docker build -t fraud-detection-api .
+```
+
+### Run Container
+
+```bash
+docker run -p 8000:8000 fraud-detection-api
 ```
 
 ---
 
-## GitHub Actions (CI)
+## Running with Docker Compose
 
-Create `.github/workflows/ci.yml`:
+```bash
+docker compose up --build
+```
 
-```yaml
-name: CI Pipeline
+Stop services:
 
-on:
-  push:
-    branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
-
-jobs:
-  build-and-test:
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      - name: Set up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: "3.10"
-
-      - name: Install dependencies
-        run: |
-          python -m pip install --upgrade pip
-          pip install -r requirements.txt
-
-      - name: Lint check
-        run: |
-          pip install flake8
-          flake8 app --max-line-length=100
-
-      - name: Docker build
-        run: docker build -t fraud-detection-api .
+```bash
+docker compose down
 ```
 
 ---
 
-## Deployment Ready
+## Explainability Notes
 
-This API is ready to be deployed on:
+* SHAP values are computed using `TreeExplainer`
+* Binary classification output is normalized to handle SHAP API changes
+* Only top‑K most impactful features are returned
+* All SHAP values are JSON‑safe floats
 
-* AWS EC2 / ECS
-* Google Cloud Run
-* Azure Container Apps
-* Any Docker-compatible platform
+---
+
+## Tech Stack
+
+* Python 3.10
+* FastAPI
+* LightGBM
+* SHAP
+* Pandas / NumPy
+* Docker & Docker Compose
+
+---
+
+## Tags
+
+`fastapi` `machine-learning` `fraud-detection` `lightgbm` `shap` `ml-api` `docker`
 
 ---
 
@@ -200,16 +238,6 @@ MIT License
 
 ---
 
-## Author
+## Disclaimer⚠️
 
-Saint Yves
-
----
-
-## Status
-
-✔ Model loaded at startup
-✔ Deterministic feature alignment
-✔ Explainability enabled
-✔ Dockerized
-✔ CI enabled
+This project is for educational and demonstrative purposes. It should not be used as‑is for real‑world financial decision‑making without additional validation, monitoring, and compliance controls.
