@@ -1,9 +1,11 @@
 # Fraud Detection API
 
 [![CI](https://github.com/SaintJeane/fraud-detection-api/actions/workflows/docker-publish.yml/badge.svg)](https://github.com/SaintJeane/fraud-detection-api/actions)
-[![Docker Image](https://img.shields.io/badge/docker-ghcr.io-blue)](https://github.com/SaintJeane/fraud-detection-api/pkgs/container/fraud-detection-api)
-[![Python](https://img.shields.io/badge/python-3.10+-blue.svg)](https://www.python.org/)
-[![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
+[![Docker Image](https://img.shields.io/badge/docker-ghcr.io-blue?style=flat-square)](https://github.com/SaintJeane/fraud-detection-api/pkgs/container/fraud-detection-api)
+![FastAPI](https://img.shields.io/badge/FastAPI-005571?style=flat-square&logo=fastapi)
+![LightGBM](https://img.shields.io/badge/LightGBM-9ACD32?style=flat-square&logo=lightgbm&logoColor=white)
+[![Python](https://img.shields.io/badge/python-3.10+-blue.svg?style=flat-square)](https://www.python.org/)
+[![License](https://img.shields.io/badge/license-MIT-green.svg?style=flat-square)](LICENSE)
 
 
 ## Overview
