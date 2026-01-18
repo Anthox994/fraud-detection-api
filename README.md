@@ -1,5 +1,11 @@
 # Fraud Detection API
 
+[![CI](https://github.com/SaintJeane/fraud-detection-api/actions/workflows/docker-publish.yml/badge.svg)](https://github.com/SaintJeane/fraud-detection-api/actions)
+[![Docker Image](https://img.shields.io/badge/docker-ghcr.io-blue)](https://github.com/SaintJeane/fraud-detection-api/pkgs/container/fraud-detection-api)
+[![Python](https://img.shields.io/badge/python-3.10+-blue.svg)](https://www.python.org/)
+[![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
+
+
 ## Overview
 
 This project is a **production‑ready Fraud Detection REST API** built with **FastAPI** and a **LightGBM binary classifier**, designed to score financial transactions for fraud risk and provide **model explainability using SHAP**. A continuation of my previous project [credit_card_fraud_detection_system_for_credit_card_transactions](https://github.com/SaintJeane/credit_card_fraud_detection_system_for_credit_card_transactions), where the best trained model, and the model's metadata are retrieved from for deployment.
@@ -202,6 +208,12 @@ Stop services:
 
 ```bash
 docker compose down
+```
+
+## Running the API with GHCR
+
+```bash
+docker run -p 8000:8000 ghcr.io/saintjeane/fraud-detection-api:latest
 ```
 
 ---
